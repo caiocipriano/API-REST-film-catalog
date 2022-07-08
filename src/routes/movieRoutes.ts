@@ -17,7 +17,7 @@ router.get("/:id",celebrate({
 }),movieController.findOne)
 
 
-router.post("/", movieController.insertMovie)
+router.post("", movieController.insertMovie)
 
 router.put("/:id", celebrate({
     [Segments.PARAMS]:{
