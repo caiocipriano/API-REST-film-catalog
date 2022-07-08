@@ -2,7 +2,7 @@ import { Movie, PrismaClient } from '@prisma/client'
 import express, { Request, Response }  from 'express'
 
 import { AppError } from './../error/appError';
-import RedisCache from "../lib/RedisCache"
+//import RedisCache from "../lib/RedisCache"
 
 const prisma = new PrismaClient()
 const app = express()
@@ -14,15 +14,15 @@ app.use(express.json())
 export class MovieService{
       async findAll (request:Request, response:Response) {
         try {
-          const redisCache= new RedisCache()
+          //const redisCache= new RedisCache()
 
-          let movies = await redisCache.recover<Movie[]>('api-blog-MOVIES_LIST')
+          //let movies = await redisCache.recover<Movie[]>('api-blog-MOVIES_LIST')
 
-          if(!movies){
+          const
              movies = await prisma.movie.findMany()
 
-            await redisCache.save('api-blog-MOVIES_LIST',movies)
-          }
+           // await redisCache.save('api-blog-MOVIES_LIST',movies)
+          
           response.json(movies)
         } catch (error) {
           throw new AppError("Erro na requisição")
@@ -32,7 +32,7 @@ export class MovieService{
       async findOne(request:Request, response:Response){
         try {
           const {id} = request.params
-          const redisCache= new RedisCache()
+         // const redisCache= new RedisCache()
           const movie = await prisma.movie.findFirst({
               where:{Id:Number(id)},include:{categorie:true}
           })
@@ -41,7 +41,7 @@ export class MovieService{
             response.json("Filme não encontrado ou não existe")
           }
 
-          await redisCache.save('api-blog-MOVIES_LIST',movie)
+          //await redisCache.save('api-blog-MOVIES_LIST',movie)
 
           response.json(movie)
         } catch (error) {
@@ -60,8 +60,8 @@ export class MovieService{
             response.json("Filme já cadastrado")
           }
 
-          const redisCache= new RedisCache()
-          await redisCache.invalidate('api-blog-MOVIES_LIST')
+         // const redisCache= new RedisCache()
+         // await redisCache.invalidate('api-blog-MOVIES_LIST')
 
           movie = await prisma.movie.create({
               data:{
@@ -89,8 +89,8 @@ export class MovieService{
         if(!movie){
           response.json("Filme não encontrado ou não existe")
         }
-        const redisCache= new RedisCache()
-        await redisCache.invalidate('api-blog-MOVIES_LIST')
+       // const redisCache= new RedisCache()
+       // await redisCache.invalidate('api-blog-MOVIES_LIST')
 
          movie = await prisma.movie.update({
             where:{Id:Number(id)},
@@ -116,8 +116,8 @@ export class MovieService{
            if(!movie){
             response.json("Filme não encontrado ou não existe")
            }    
-          const redisCache= new RedisCache()
-           await redisCache.invalidate('api-blog-MOVIES_LIST')
+         // const redisCache= new RedisCache()
+         //  await redisCache.invalidate('api-blog-MOVIES_LIST')
  
 
           await prisma.movie.delete({ where:{Id:Number(id)}})
