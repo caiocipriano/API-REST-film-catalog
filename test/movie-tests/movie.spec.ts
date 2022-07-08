@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import  request  from 'supertest';
 import { app } from "../../src/server";
 
 describe("",()=>{
-    const prisma = new PrismaClient()
    test("Should return all movies",async()=>{
         const response = await request(app).get("/movies")
         expect(response.status).toBe(200)
@@ -27,6 +25,21 @@ describe("",()=>{
         expect(response.status).toBe(200)
     })
 
+    test("Should update movie",async()=>{
+        const response = await request(app).put("/movies/15")
+        .send({
+            title:"Minions",
+            year:"2022",
+            time:"2hrs",
+            nameTitle: "Ação"
+        })
+        expect(response.status).toBe(200)
+    })
+
+    test("Should delete movie",async()=>{
+        const response = await request(app).delete("/movies/15")
+        expect(response.status).toBe(200)
+    })
 
     
 })
