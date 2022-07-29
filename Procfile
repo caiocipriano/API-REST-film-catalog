@@ -1,1 +1,1 @@
-web : star
+web : start

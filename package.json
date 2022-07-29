@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "star": "npx ts-node src/server.ts",
+    "start": "npx ts-node src/server.ts",
     "test": "jest"
   },
   "repository": {
