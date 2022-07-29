@@ -6,7 +6,7 @@ import { router } from './routes'
 import { AppError } from './error/appError';
 
 const app = express()
-
+const port = process.env.PORT ||8080
 app.use(express.json())
 app.use(router)
 app.use(errors())
@@ -27,7 +27,7 @@ app.use(
   );
 
 //Rodando Servidor
-app.listen(8080,()=>{
+app.listen(port,()=>{
     console.log("Rodando na porta 8080...")
 })
 
